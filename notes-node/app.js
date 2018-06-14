@@ -21,16 +21,30 @@ var command = argv._[0];
 
 switch(command){
     case 'add':
-        notes.addNote(argv.title, argv.body);
+        var note = notes.addNote(argv.title, argv.body);
+        if(!note){
+            console.log(`Note with title ${argv.title} already exists!`);
+        }else {
+            notes.logNote(note);
+        }
         break;
     case 'list':
+        notes.listNotes();
+        break;
+    case 'getAll':
         notes.getAll();
         break;
     case 'remove':
-        notes.removeNote(argv.title)
+        var message = notes.removeNote(argv.title) ? 'removed successfully' : 'not found'
+        console.log(`The note with title ${argv.title} was ${message}!`)
         break;
     case 'read':
-        notes.getNote(argv.title)
+        var note = notes.getNote(argv.title)
+        if(note){
+            notes.logNote(note)
+        }else{
+            console.log("Note NOT Found!");
+        }
         break;
     default:
         console.log('Command not recognized!')
