@@ -1,4 +1,4 @@
-console.log('Staring notes.js')
+
 const fs = require('fs')
 const _ = require('lodash')
 
@@ -46,16 +46,14 @@ var removeNote = (title) => {
 };
 
 var getAllNotes = () => {
-    console.log('Getting All Notes')
+    return fetchNotes();
 }
 
-var listNotes = () => {
-    debugger;
-  var notes = fetchNotes();
+var listNotes = (notes) => {
   for (index in notes) {
-    console.log(`Note #${_.toString(_.toInteger(index) +1)}`);
+    console.log("");
+    console.log(`  Note #${_.toString(_.toInteger(index) +1)}`);
     logNote(notes[index]);
-    
   }
 };
 
