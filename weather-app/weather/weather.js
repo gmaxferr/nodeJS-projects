@@ -18,7 +18,7 @@ var getWeather = (lat, lng, callback) => {
                 callback(undefined, {
                     summary: body.currently.summary,
                     precipProbability: body.currently.precipProbability,
-                    temperature: (body.currently.temperature -32)*5/9,
+                    temperature: (body.currently.temperature -32)*5/9, //converted to celsius
                     humidity: body.currently.humidity,
                     pressure: body.currently.pressure,
                     windSpeed: body.currently.windSpeed
