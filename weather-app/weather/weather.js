@@ -1,35 +1,40 @@
 
 const request = require('request');
 
-var getWeather = (lat, lng, callback) => {
+var getWeather = (lat, lng) => {
 
-    if(lat && lng){    
+    return new Promise((resolve, reject)=>{
 
-        request({
-            url: `https://api.darksky.net/forecast/7f76abe9057e3aa5f1605944ef489d49/${lat},${lng}`,
-            json: true
-        }, (error, response, body) => {
+        if(lat && lng){    
 
-            if(error){
-                callback("ERROR: Can't connect to forecast server");
-            }else if(response.code === 400){
-                callback(body.error);
-            }else{
-                callback(undefined, {
-                    summary: body.currently.summary,
-                    precipProbability: body.currently.precipProbability,
-                    temperature: (body.currently.temperature -32)*5/9, //converted to celsius
-                    humidity: body.currently.humidity,
-                    pressure: body.currently.pressure,
-                    windSpeed: body.currently.windSpeed
-                })
-            }
+            request({
+                url: `https://api.darksky.net/forecast/7f76abe9057e3aa5f1605944ef489d49/${lat},${lng}`,
+                json: true
+            }, (error, response, body) => {
+    
+                if(error){
+                    reject("ERROR: Can't connect to forecast server");
+                }else if(response.code === 400){
+                    reject(body.error);
+                }else{
+                    resolve({
+                        summary: body.currently.summary,
+                        precipProbability: body.currently.precipProbability,
+                        temperature: (body.currently.temperature -32)*5/9, //converted to celsius
+                        humidity: body.currently.humidity,
+                        pressure: body.currently.pressure,
+                        windSpeed: body.currently.windSpeed
+                    })
+                }
+    
+            });
+            
+        }else{
+            reject("Invalid Latitude or Longitude")
+        }
 
-        });
-        
-    }else{
-        console.log("ERROR: Invalid Lat or Long")
-    }
+    });
+
 
 };
 

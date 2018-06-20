@@ -19,22 +19,13 @@ const argv = yargs
     .argv;
 
 
-var result = geocode.geocodeAddress(argv.a, (errorMessage, result) => {
+geocode.geocodeAddress('4460 686').then((result) => {
+    console.log(JSON.stringify(result, undefined, 2))
 
-    if(errorMessage){
-        console.log(errorMessage);
-    }else{
-        console.log(result.address);
+    return  weather.getWeather(result.latitude, result.longitude).then((resultWeather)=>{
+        console.log(JSON.stringify(resultWeather,undefined,2 ));
+    }).catch((errors)=>{console.log("ERROR: " + errors)});
 
-        weather.getWeather(result.latitude, result.longitude, (errorMessage, weatherResult) => {
-            if(errorMessage){
-                console.log(errorMessage);
-            } else {
-                console.log(JSON.stringify(weatherResult, undefined, 2));
-            }
-        });
-
-    }
+}).catch((errorMessage) => {
+    console.log("ErrorMessage: " + errorMessage)
 });
-
-

@@ -1,5 +1,5 @@
 
-const request = require('request') 
+const request = require('request')
 
 var geocodeAddress = (address) => {
     return new Promise((resolve,reject)=>{
@@ -23,6 +23,9 @@ var geocodeAddress = (address) => {
     });
 }
 
-module.exports = {
-    geocodeAddress
-};
+
+geocodeAddress('4460 686').then((result) => {
+    console.log(JSON.stringify(result, undefined, 2))
+}).catch((errorMessage) => {
+    console.log("ErrorMessage: " + errorMessage)
+});
